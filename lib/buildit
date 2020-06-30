@@ -70,7 +70,7 @@ case $TRIPLE in
     SOEXT=so
     LDSHARED_FLAGS="-o libc++abi.so.1.0 \
         -shared -nodefaultlibs -Wl,-soname,libc++abi.so.1 \
-        -lpthread -lrt -lc -lstdc++"
+        -lpthread -lrt -lc -lc++ -lunwind"
     ;;
 esac
 
@@ -92,6 +92,8 @@ case $TRIPLE in
   ;;
 esac
 $CC *.o $RC_CFLAGS $LDSHARED_FLAGS $EXTRA_FLAGS
+ar rc libc++abi.a *.o
+ranlib libc++abi.a
 
 if [ -z $RC_XBS ]
 then
